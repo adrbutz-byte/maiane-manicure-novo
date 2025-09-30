@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maiane Manicure - Agendamento Rápido</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Configuração de Cores e Fontes */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-
+        
         :root {
             /* Tonalidades de Rosa Maiane */
             --primary-pink: #ff69b4; /* Rosa Choque principal */
@@ -19,11 +19,11 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--light-bg);
+            background-color: var(--light-bg); 
             min-height: 100vh;
             color: var(--text-color);
         }
-
+        
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -51,7 +51,7 @@
             cursor: pointer;
             text-align: left;
         }
-
+        
         /* Estado Selecionado (Aplicado a Serviço, Data e Horário) */
         .selected-item {
             border-color: var(--primary-pink) !important;
@@ -59,7 +59,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transform: translateY(-1px);
         }
-
+        
         /* Estilos específicos para o novo Seletor de Data */
         .date-card {
             min-width: 80px; /* Largura mínima para ser legível */
@@ -92,7 +92,7 @@
             background: #f1f1f1;
             border-radius: 10px;
         }
-
+        
         /* Oculta os passos futuros inicialmente */
         #step-2, #step-3 {
             opacity: 0;
@@ -100,7 +100,7 @@
             overflow: hidden;
             transition: opacity 0.5s ease, max-height 0.5s ease;
         }
-
+        
         /* Mostra o passo com animação */
         .step-visible {
             opacity: 1 !important;
@@ -118,11 +118,11 @@
             font-weight: 700;
             transition: background-color 0.2s;
         }
-
+        
         #confirm-service-button:hover {
-            background-color: var(--primary-pink);
+             background-color: var(--primary-pink);
         }
-
+        
         /* Estilos para o Destaque da Logo/Foto */
         .logo-container {
             display: flex;
@@ -131,9 +131,9 @@
             padding-top: 20px;
             padding-bottom: 10px;
         }
-
+        
         .profile-pic-large {
-            width: 150px;
+            width: 150px; 
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
@@ -143,25 +143,12 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
             margin-bottom: 15px;
         }
-
+        
         /* NOVO ESTILO: Descrição do Serviço com mais destaque (mantido) */
         #detail-description {
             font-size: 1rem; /* Aumenta de 0.875rem (sm) para 1rem (base) */
             font-weight: 600; /* Deixa negrito médio */
             color: #4b5563; /* gray-600 */
-        }
-
-        /* Botão de Reservar destacado quando ativado */
-        #book-button {
-            transition: background-color 0.3s, color 0.3s;
-        }
-        #book-button.enabled {
-            background-color: var(--primary-pink);
-            color: white;
-            cursor: pointer;
-        }
-        #book-button.enabled:hover {
-            background-color: var(--dark-pink);
         }
     </style>
 </head>
@@ -169,22 +156,24 @@
     <div class="container">
         <!-- Cabeçalho com Destaque na Logo -->
         <header class="logo-container">
-            <img src="perfil.png" alt="Logo Maiane Manicure" class="profile-pic-large" />
+            <!-- NOVO: Referenciando o arquivo da sua logo. O nome deve ser EXATO! (ex: perfil.png) -->
+            <img src="perfil.png" alt="Logo Maiane Manicure" class="profile-pic-large">
             <h1 class="text-3xl font-extrabold text-gray-800">Maiane Manicure</h1>
             <p class="text-md text-gray-500">Agende em 3 passos</p>
         </header>
-
+        
         <!-- Passo 1: Seleção de Serviços -->
         <section id="step-1" class="mb-6">
             <h2 class="step-title">1. Escolha o Serviço</h2>
-
+            
             <div id="services-list" class="space-y-3">
                 <!-- Cards de Serviço serão injetados aqui -->
             </div>
-
+            
             <!-- Detalhes do Serviço Selecionado (Com destaque rosa) -->
             <div id="service-details" class="mt-6 p-4 box-item hidden">
                 <p class="text-xl font-extrabold text-dark-pink mb-2" id="detail-name"></p>
+                <!-- A descrição agora está mais detalhada no JS -->
                 <p class="mb-3" id="detail-description"></p>
                 <div class="flex justify-between items-center text-md font-semibold text-gray-700">
                     <span>Preço: <strong id="detail-price" class="text-primary-pink"></strong></span>
@@ -196,31 +185,35 @@
             </div>
         </section>
 
-        <!-- Passo 2: Seleção de Data -->
+        <!-- Passo 2: Seleção de Data (NOVO VISUAL COM SCROLL) -->
         <section id="step-2" class="mb-6">
             <h2 class="step-title">2. Selecione a Data</h2>
+            <!-- Container para a lista de datas elegante e rolavel (overflow-x-scroll) -->
             <div id="date-selection-container" class="flex overflow-x-scroll space-x-3 pb-3">
                 <p class="text-gray-500 py-3">Selecione um serviço primeiro...</p>
             </div>
             <p id="date-warning" class="text-sm text-red-500 mt-2 hidden">Por favor, selecione uma data no futuro.</p>
         </section>
 
-        <!-- Passo 3: Seleção de Horário -->
+        <!-- Passo 3: Seleção de Horário (NOVO FLUXO DE PERÍODO) -->
         <section id="step-3" class="mb-20">
             <h2 class="step-title">3. Escolha o Período e Horário</h2>
-
+            
+            <!-- Seleção de Período (Manhã / Tarde) -->
             <div id="period-selection" class="grid grid-cols-2 gap-3 mb-4 hidden">
                 <button data-period="morning" class="period-button box-item">Manhã (08h às 12h)</button>
                 <button data-period="afternoon" class="period-button box-item">Tarde (13h às 17h)</button>
             </div>
-
+            
+            <!-- Horários após seleção do período -->
             <div id="time-slots-wrapper" class="hidden">
                 <p class="text-sm text-gray-500 mb-2 font-medium">Horários disponíveis na <strong id="selected-period-text"></strong>:</p>
                 <div id="time-slots" class="grid grid-cols-3 gap-3">
+                    <!-- Horários correspondentes ao período serão injetados aqui -->
                 </div>
             </div>
         </section>
-
+        
         <!-- Botão Flutuante de Agendamento -->
         <section id="final-booking-area" class="sticky bottom-0 left-0 right-0 bg-white p-4 shadow-2xl z-10 rounded-t-xl border-t border-gray-100">
             <div class="max-w-sm mx-auto space-y-3">
@@ -229,14 +222,16 @@
                     <span class="truncate">Data: <strong id="summary-date">---</strong></span>
                     <span class="text-xl font-extrabold text-primary-pink">Total: <strong id="summary-price">---</strong></span>
                 </div>
-
+                
                 <button id="book-button" disabled class="w-full py-3 rounded-xl bg-gray-300 text-white font-bold text-lg transition duration-150">
                     Preencha todos os passos
                 </button>
             </div>
         </section>
+
     </div>
 
+    <!-- Script JavaScript para a Lógica -->
     <script>
         // --- CONFIGURAÇÃO DE SERVIÇOS E HORÁRIOS ---
         const SERVICES = [
@@ -245,7 +240,7 @@
                 name: "Pé", 
                 duration: "1:30 min", 
                 price: 30.00, 
-                description: "Cuidado completo para os seus pés. cutilagem precisa e esmaltação com a cor de sua preferência. Pés macios e bem cuidados!", 
+                description: "Cuidado completo para os seus pés. Inclui imersão, cutilagem precisa, hidratação e esmaltação com a cor de sua preferência. Pés macios e bem cuidados!", 
                 icon: "👣" 
             },
             { 
@@ -253,7 +248,7 @@
                 name: "Mão", 
                 duration: "1:30 min", 
                 price: 30.00, 
-                description: "Cuidado completo para suas mãos. Cutilagem impecável,  e aplicação de esmalte de alta qualidade para um acabamento perfeito.", 
+                description: "Tratamento especializado para suas mãos. Cutilagem impecável, massagem relaxante e aplicação de esmalte de alta qualidade para um acabamento perfeito.", 
                 icon: "💅" 
             },
             { 
@@ -261,7 +256,7 @@
                 name: "Unha Postiça", 
                 duration: "1:30 min", 
                 price: 40.00, 
-                description: "Alongamento com unhas postiças, seguido de cutilagem e esmaltação. Unhas longas, resistentes e com o formato que você desejar!", 
+                description: "Alongamento com unhas postiças (tips ou soft gel), seguido de cutilagem e esmaltação. Unhas longas, resistentes e com o formato que você desejar!", 
                 icon: "✨" 
             },
             { 
@@ -269,19 +264,20 @@
                 name: "Combo Pé e Mão", 
                 duration: "2:30 min", 
                 price: 50.00, 
-                description: "O pacote completo para sua beleza! Pés e mãos impecáveis em uma única sessão. Inclui cutilagem, esmaltação profissional para ambos.", 
+                description: "O pacote completo para sua beleza! Pés e mãos impecáveis em uma única sessão. Inclui cutilagem, hidratação e esmaltação profissional para ambos.", 
                 icon: "👑" 
             },
             { 
                 id: 5, 
                 name: "Esmaltação", 
                 duration: "1:30 min", 
-                price: 20.00, 
+                price: 15.00, 
                 description: "Serviço rápido focado na aplicação do esmalte. Limpeza superficial e pintura caprichada (cores à escolha do cliente). Ideal para retoques!", 
                 icon: "🌈" 
             },
         ];
-
+        
+        // Horários fixos de atendimento agrupados por período
         const TIME_SLOTS_ALL = [
             { time: "08:30", period: "morning" },
             { time: "10:00", period: "morning" },
@@ -289,19 +285,21 @@
             { time: "14:30", period: "afternoon" },
             { time: "16:00", period: "afternoon" },
         ];
-
-        // Estado
+        
+        // --- ESTADO DA APLICAÇÃO ---
         let selectedService = null;
         let selectedDate = null;
-        let selectedPeriod = null;
+        let selectedPeriod = null; // Novo estado para Manhã/Tarde
         let selectedTime = null;
 
-        // Formatação da moeda
+        // --- FUNÇÕES AUXILIARES ---
+
         function formatCurrency(value) {
             return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
-
+        
         function scrollToElement(id) {
+            // Rola para o elemento, subtraindo 70px para não ser coberto pelo cabeçalho
             const element = document.getElementById(id);
             if (element) {
                 const y = element.getBoundingClientRect().top + window.scrollY - 70;
@@ -309,6 +307,10 @@
             }
         }
 
+        /**
+         * Controla a visibilidade e animação dos passos.
+         * @param {string} stepId ID do passo a mostrar (ex: 'step-2').
+         */
         function showStep(stepId) {
             const stepElement = document.getElementById(stepId);
             stepElement.classList.add('step-visible');
@@ -317,26 +319,39 @@
             }, 10);
         }
 
+        /**
+         * Gera os objetos de data para os próximos 30 dias. (Atualizado de 7 para 30)
+         */
         function getAvailableDates() {
             const dates = [];
             const today = new Date();
-
+            
+            // Nomes dos dias da semana em português
             const dayNames = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
-            const numberOfDays = 30;
+            // Gerar datas para os próximos 30 dias
+            const numberOfDays = 30; 
             for (let i = 0; i < numberOfDays; i++) {
                 const date = new Date(today);
                 date.setDate(today.getDate() + i);
-
+                
+                // Formato AAAA-MM-DD para o valor (usado internamente)
                 const value = date.toISOString().split('T')[0];
+                
+                // Formato para exibição
                 const day = date.getDate();
                 const dayName = dayNames[date.getDay()];
-
+                
                 dates.push({ value, day, dayName });
             }
             return dates;
         }
 
+        // --- LÓGICA DE RENDERIZAÇÃO ---
+
+        /**
+         * Renderiza os cards de serviço.
+         */
         function renderServices() {
             const servicesList = document.getElementById('services-list');
             servicesList.innerHTML = '';
@@ -346,12 +361,13 @@
                 card.id = `service-${service.id}`;
                 card.classList.add('box-item', 'service-card', 'hover:border-primary-pink');
                 card.setAttribute('data-id', service.id);
-
+                
                 card.innerHTML = `
                     <div class="flex items-center justify-between">
                         <span class="text-2xl mr-4">${service.icon}</span>
                         <div class="flex-grow">
                             <div class="text-lg font-bold text-gray-800">${service.name}</div>
+                            <!-- Descrição mais discreta na lista -->
                             <div class="text-xs text-gray-500 mt-1">${service.description}</div>
                         </div>
                         <div class="text-xl font-extrabold text-primary-pink">${formatCurrency(service.price)}</div>
@@ -362,22 +378,27 @@
                 servicesList.appendChild(card);
             });
         }
-
+        
+        /**
+         * Renderiza os cards de seleção de data.
+         */
         function renderDateSelection() {
             const container = document.getElementById('date-selection-container');
             container.innerHTML = '';
             const dates = getAvailableDates();
 
             dates.forEach(dateObj => {
+                
                 const card = document.createElement('div');
                 card.classList.add('box-item', 'date-card', 'hover:border-primary-pink');
                 card.setAttribute('data-date', dateObj.value);
-
+                
                 card.innerHTML = `
                     <span class="day-name">${dateObj.dayName}</span>
                     <span class="text-2xl">${dateObj.day}</span>
                 `;
-
+                
+                // Se a data já estiver selecionada, marca como selecionada
                 if (selectedDate === dateObj.value) {
                     card.classList.add('selected-item');
                 }
@@ -386,7 +407,10 @@
                 container.appendChild(card);
             });
         }
-
+        
+        /**
+         * Renderiza os botões de horário, filtrados pelo período.
+         */
         function renderTimeSlots(slots) {
             const timeSlotsContainer = document.getElementById('time-slots');
             timeSlotsContainer.innerHTML = '';
@@ -401,377 +425,212 @@
                 button.classList.add('box-item', 'time-slot-button', 'text-lg', 'font-bold', 'text-center', 'hover:border-primary-pink');
                 button.textContent = slot.time;
                 button.setAttribute('data-time', slot.time);
-
+                
                 button.addEventListener('click', (e) => selectTimeSlot(slot.time, e.currentTarget));
                 timeSlotsContainer.appendChild(button);
             });
         }
 
+
+        // --- LÓGICA DE SELEÇÃO E FLUXO ---
+        
+        /**
+         * Seleciona um serviço e mostra seus detalhes.
+         */
         function selectService(id) {
             selectedService = SERVICES.find(s => s.id === id);
             const detailBox = document.getElementById('service-details');
 
+            // 1. Limpa seleção anterior dos cards de serviço
             document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected-item'));
-            document.getElementById(`service-${id}`).classList.add('selected-item');
-
+            
+            // 2. Marca o card de serviço atual
+            const currentCard = document.getElementById(`service-${id}`);
+            currentCard.classList.add('selected-item');
+            
+            // 3. Aplica o estilo de seleção à caixa de detalhes
             detailBox.classList.add('selected-item');
-
+            
+            // 4. Atualiza os detalhes 
             document.getElementById('detail-name').textContent = selectedService.name;
             document.getElementById('detail-description').textContent = selectedService.description;
             document.getElementById('detail-price').textContent = formatCurrency(selectedService.price);
             document.getElementById('detail-duration').textContent = selectedService.duration;
             detailBox.classList.remove('hidden');
-
+            
+            // 5. Limpa passos futuros e resumo
             selectedDate = null;
             selectedPeriod = null;
             selectedTime = null;
             updateSummary();
-
+            
+            // Esconde os passos 2 e 3 e seus elementos internos
             document.getElementById('step-2').classList.remove('step-visible');
             document.getElementById('step-3').classList.remove('step-visible');
             document.getElementById('period-selection').classList.add('hidden');
             document.getElementById('time-slots-wrapper').classList.add('hidden');
-
+            
+            // Garante que o botão final está desativado
             updateBookButton();
         }
-
+        
+        /**
+         * Confirma o serviço e avança para o passo 2.
+         */
         function confirmService() {
             if (!selectedService) return;
-
+            
+            // Mostra o próximo passo (Data)
             showStep('step-2');
-            renderDateSelection();
+            renderDateSelection(); // Renderiza as novas opções de data
         }
 
+        /**
+         * Seleciona a data e avança para a escolha do Período.
+         */
         function selectDate(dateString, cardElement) {
             selectedDate = dateString;
-            selectedTime = null;
+            selectedTime = null; 
             selectedPeriod = null;
-
+            
+            // Atualiza o visual da seleção de data: limpa e marca o novo
             document.querySelectorAll('.date-card').forEach(card => card.classList.remove('selected-item'));
             cardElement.classList.add('selected-item');
-
+            
+            // Limpa seleções de horário e período
             document.querySelectorAll('.period-button').forEach(btn => btn.classList.remove('selected-item'));
             document.getElementById('time-slots').innerHTML = '';
             document.getElementById('time-slots-wrapper').classList.add('hidden');
-
+            
             updateSummary();
             updateBookButton();
 
+            // Mostra o passo 3 (Período)
             showStep('step-3');
             document.getElementById('period-selection').classList.remove('hidden');
-            document.getElementById('selected-period-text').textContent = '---';
-            scrollToElement('period-selection');
+            document.getElementById('selected-period-text').textContent = '---'; // Limpa o texto
+            scrollToElement('period-selection'); // Rola para a seleção de período
         }
-
+        
+        /**
+         * Seleciona o Período (Manhã/Tarde) e renderiza os horários correspondentes.
+         */
         function selectPeriod(period, buttonElement) {
             selectedPeriod = period;
-            selectedTime = null;
-
+            selectedTime = null; // Zera o horário
+            
+            // Atualiza o visual da seleção de período
             document.querySelectorAll('.period-button').forEach(btn => btn.classList.remove('selected-item'));
             buttonElement.classList.add('selected-item');
-
-            document.getElementById('selected-period-text').textContent = period === 'morning' ? 'Manhã' : 'Tarde';
-
+            
+            // Define o texto do período
+            document.getElementById('selected-period-text').textContent = (period === 'morning' ? 'Manhã' : 'Tarde');
+            
+            // Filtra e renderiza os horários
             const filteredSlots = TIME_SLOTS_ALL.filter(slot => slot.period === selectedPeriod);
             renderTimeSlots(filteredSlots);
 
+            // Mostra os slots
             document.getElementById('time-slots-wrapper').classList.remove('hidden');
-
+            
             updateSummary();
             updateBookButton();
         }
 
+        /**
+         * Seleciona o horário final.
+         */
         function selectTimeSlot(time, button) {
             selectedTime = time;
-
+            
+            // 1. Limpa seleção anterior
             document.querySelectorAll('.time-slot-button').forEach(btn => btn.classList.remove('selected-item'));
+            
+            // 2. Marca o botão atual
             button.classList.add('selected-item');
-
+            
+            // 3. Atualiza o resumo e ativa o botão final
             updateSummary();
             updateBookButton();
         }
 
+        /**
+         * Atualiza o resumo na área flutuante.
+         */
         function updateSummary() {
             document.getElementById('summary-service').textContent = selectedService ? selectedService.name : '---';
             document.getElementById('summary-price').textContent = selectedService ? formatCurrency(selectedService.price) : '---';
-
+            
+            // Formata a data para visualização
             if (selectedDate) {
-                const dateParts = selectedDate.split('-');
+                const dateParts = selectedDate.split('-'); // YYYY-MM-DD
                 document.getElementById('summary-date').textContent = `${dateParts[2]}/${dateParts[1]}`;
             } else {
                 document.getElementById('summary-date').textContent = '---';
             }
         }
 
+        /**
+         * Ativa/desativa e estiliza o botão final de agendamento.
+         */
         function updateBookButton() {
             const bookButton = document.getElementById('book-button');
             if (selectedService && selectedDate && selectedTime) {
                 bookButton.disabled = false;
                 bookButton.textContent = `Agendar ${selectedService.name} - ${selectedTime}`;
-                bookButton.classList.add('enabled');
+                bookButton.classList.remove('bg-gray-300');
+                bookButton.classList.add('bg-primary-pink', 'hover:bg-dark-pink');
             } else {
                 bookButton.disabled = true;
                 bookButton.textContent = 'Preencha todos os passos';
-                bookButton.classList.remove('enabled');
+                bookButton.classList.add('bg-gray-300');
+                bookButton.classList.remove('bg-primary-pink', 'hover:bg-dark-pink');
             }
         }
-
+        
+        /**
+         * Executa a ação final: monta a mensagem e redireciona para o WhatsApp.
+         */
         function finalizeBooking() {
             if (!selectedService || !selectedDate || !selectedTime) return;
 
             const formattedPrice = formatCurrency(selectedService.price);
-            const dateParts = selectedDate.split('-');
+            const dateParts = selectedDate.split('-'); // YYYY-MM-DD
             const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
 
-            const message =
+            const message = 
                 `Olá, Maiane! Gostaria de agendar o seguinte:\n\n` +
                 `- Serviço: ${selectedService.name}\n` +
                 `- Descrição: ${selectedService.description}\n` +
                 `- Preço: ${formattedPrice}\n` +
-                `- Duração Estimada: ${selectedService
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Maiane Manicure - Agendamento Rápido</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Configuração de Cores e Fontes */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-
-        :root {
-            /* Tonalidades de Rosa Maiane */
-            --primary-pink: #ff69b4; /* Rosa Choque principal */
-            --dark-pink: #d12e69; /* Rosa escuro para títulos */
-            --light-bg: #f9f9f9; /* Fundo muito claro/branco */
-            --text-color: #333;
+                `- Duração Estimada: ${selectedService.duration}\n\n` +
+                `*Data:* ${formattedDate}\n` +
+                `*Horário:* ${selectedTime}\n\n` +
+                `Aguardo sua confirmação!`;
+            
+            const whatsappMessage = encodeURIComponent(message);
+            
+            // Seu número de telefone (apenas números, incluindo o 55 e DDD)
+            const phone = "5573999624432"; 
+            window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${whatsappMessage}`, '_blank');
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--light-bg);
-            min-height: 100vh;
-            color: var(--text-color);
-        }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        // --- INICIALIZAÇÃO E LISTENERS ---
+        window.onload = () => {
+            renderServices();
 
-        /* Estilo do Título do Passo (Borda esquerda rosa) */
-        .step-title {
-            font-weight: 700;
-            font-size: 1.25rem; /* text-xl */
-            color: #374151; /* gray-700 */
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary-pink);
-            padding-left: 0.75rem;
-        }
+            // Listeners de eventos
+            document.getElementById('confirm-service-button').addEventListener('click', confirmService);
+            document.getElementById('book-button').addEventListener('click', finalizeBooking);
 
-        /* Estilo dos Cards de Serviço e Horário (Visual das caixas) */
-        .box-item {
-            padding: 16px;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Sombra suave */
-            border: 2px solid transparent; /* Borda transparente inicial */
-            transition: all 0.2s ease;
-            cursor: pointer;
-            text-align: left;
-        }
-
-        /* Estado Selecionado (Aplicado a Serviço, Data e Horário) */
-        .selected-item {
-            border-color: var(--primary-pink) !important;
-            background-color: #fff0f5; /* Rosa muito suave para fundo */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transform: translateY(-1px);
-        }
-
-        /* Estilos específicos para o novo Seletor de Data */
-        .date-card {
-            min-width: 80px; /* Largura mínima para ser legível */
-            text-align: center;
-            padding: 10px 0;
-            font-weight: 600;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .date-card .day-name {
-            font-size: 0.8rem;
-            color: #9ca3af; /* gray-400 */
-            margin-bottom: 4px;
-        }
-        /* Destaque do Nome do Dia na data selecionada */
-        .date-card.selected-item .day-name {
-            color: var(--dark-pink); /* Cor de texto do dia selecionado */
-        }
-        /* Custom scrollbar para o seletor de data */
-        #date-selection-container::-webkit-scrollbar {
-            height: 5px;
-        }
-        #date-selection-container::-webkit-scrollbar-thumb {
-            background: #ffc0cb; /* Rosa claro para o thumb */
-            border-radius: 10px;
-        }
-        #date-selection-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        /* Oculta os passos futuros inicialmente */
-        #step-2, #step-3 {
-            opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: opacity 0.5s ease, max-height 0.5s ease;
-        }
-
-        /* Mostra o passo com animação */
-        .step-visible {
-            opacity: 1 !important;
-            max-height: 800px !important; /* Valor alto para garantir que caiba */
-            margin-top: 1.5rem;
-            margin-bottom: 2.5rem;
-        }
-
-        /* Botão de Confirmação local */
-        #confirm-service-button {
-            padding: 12px;
-            border-radius: 8px;
-            background-color: var(--dark-pink);
-            color: white;
-            font-weight: 700;
-            transition: background-color 0.2s;
-        }
-
-        #confirm-service-button:hover {
-            background-color: var(--primary-pink);
-        }
-
-        /* Estilos para o Destaque da Logo/Foto */
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-            padding-bottom: 10px;
-        }
-
-        .profile-pic-large {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            /* Anel duplo de destaque */
-            border: 6px solid var(--primary-pink); /* Anel rosa primário */
-            outline: 3px solid white; /* Anel interno branco */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
-            margin-bottom: 15px;
-        }
-
-        /* NOVO ESTILO: Descrição do Serviço com mais destaque (mantido) */
-        #detail-description {
-            font-size: 1rem; /* Aumenta de 0.875rem (sm) para 1rem (base) */
-            font-weight: 600; /* Deixa negrito médio */
-            color: #4b5563; /* gray-600 */
-        }
-
-        /* Botão de Reservar destacado quando ativado */
-        #book-button {
-            transition: background-color 0.3s, color 0.3s;
-        }
-        #book-button.enabled {
-            background-color: var(--primary-pink);
-            color: white;
-            cursor: pointer;
-        }
-        #book-button.enabled:hover {
-            background-color: var(--dark-pink);
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Cabeçalho com Destaque na Logo -->
-        <header class="logo-container">
-            <img src="perfil.png" alt="Logo Maiane Manicure" class="profile-pic-large" />
-            <h1 class="text-3xl font-extrabold text-gray-800">Maiane Manicure</h1>
-            <p class="text-md text-gray-500">Agende em 3 passos</p>
-        </header>
-
-        <!-- Botão para teste do app.js -->
-        <button id="btnClique" class="my-4 px-4 py-2 rounded bg-pink-500 text-white hover:bg-pink-600">
-            Clique aqui
-        </button>
-
-        <!-- Passo 1: Seleção de Serviços -->
-        <section id="step-1" class="mb-6">
-            <h2 class="step-title">1. Escolha o Serviço</h2>
-
-            <div id="services-list" class="space-y-3">
-                <!-- Cards de Serviço serão injetados aqui -->
-            </div>
-
-            <!-- Detalhes do Serviço Selecionado (Com destaque rosa) -->
-            <div id="service-details" class="mt-6 p-4 box-item hidden">
-                <p class="text-xl font-extrabold text-dark-pink mb-2" id="detail-name"></p>
-                <p class="mb-3" id="detail-description"></p>
-                <div class="flex justify-between items-center text-md font-semibold text-gray-700">
-                    <span>Preço: <strong id="detail-price" class="text-primary-pink"></strong></span>
-                    <span>Tempo: <strong id="detail-duration" class="text-primary-pink"></strong></span>
-                </div>
-                <button id="confirm-service-button" class="mt-4 w-full">
-                    Confirmar e Escolher Data
-                </button>
-            </div>
-        </section>
-
-        <!-- Passo 2: Seleção de Data -->
-        <section id="step-2" class="mb-6">
-            <h2 class="step-title">2. Selecione a Data</h2>
-            <div id="date-selection-container" class="flex overflow-x-scroll space-x-3 pb-3">
-                <p class="text-gray-500 py-3">Selecione um serviço primeiro...</p>
-            </div>
-            <p id="date-warning" class="text-sm text-red-500 mt-2 hidden">Por favor, selecione uma data no futuro.</p>
-        </section>
-
-        <!-- Passo 3: Seleção de Horário -->
-        <section id="step-3" class="mb-20">
-            <h2 class="step-title">3. Escolha o Período e Horário</h2>
-
-            <div id="period-selection" class="grid grid-cols-2 gap-3 mb-4 hidden">
-                <button data-period="morning" class="period-button box-item">Manhã (08h às 12h)</button>
-                <button data-period="afternoon" class="period-button box-item">Tarde (13h às 17h)</button>
-            </div>
-
-            <div id="time-slots-wrapper" class="hidden">
-                <p class="text-sm text-gray-500 mb-2 font-medium">Horários disponíveis na <strong id="selected-period-text"></strong>:</p>
-                <div id="time-slots" class="grid grid-cols-3 gap-3"></div>
-            </div>
-        </section>
-
-        <!-- Botão Flutuante de Agendamento -->
-        <section id="final-booking-area" class="sticky bottom-0 left-0 right-0 bg-white p-4 shadow-2xl z-10 rounded-t-xl border-t border-gray-100">
-            <div class="max-w-sm mx-auto space-y-3">
-                <div class="flex justify-between items-center text-sm font-semibold text-gray-700">
-                    <span class="truncate">Serviço: <strong id="summary-service">---</strong></span>
-                    <span class="truncate">Data: <strong id="summary-date">---</strong></span>
-                    <span class="text-xl font-extrabold text-primary-pink">Total: <strong id="summary-price">---</strong></span>
-                </div>
-
-                <button id="book-button" disabled class="w-full py-3 rounded-xl bg-gray-300 text-white font-bold text-lg transition duration-150">
-                    Preencha todos os passos
-                </button>
-            </div>
-        </section>
-    </div>
-
-    <script src="app.js"></script>
+            // Listener para os botões de período (Manhã/Tarde)
+            document.querySelectorAll('.period-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    selectPeriod(e.currentTarget.getAttribute('data-period'), e.currentTarget);
+                });
+            });
+        };
+    </script>
 </body>
 </html>
