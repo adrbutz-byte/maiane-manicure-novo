@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maiane Manicure | Valença, BA</title>
     <style>
+        /* Tipografia Inter para melhor visual */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', Arial, sans-serif;
             text-align: center;
-            background-color: #f8e8f8; /* Rosa suave de fundo */
+            background-color: #fcf4f8; /* Rosa suave, quase branco */
             color: #333;
             min-height: 100vh;
             display: flex;
@@ -28,13 +31,14 @@
             border-radius: 50%;
             object-fit: cover;
             border: 5px solid white;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); 
             margin-bottom: 20px;
         }
         h1 {
             font-size: 2.2em;
             margin-bottom: 5px;
             color: #880e4f; /* Cor de destaque (vinho/bordô) */
+            font-weight: 900; /* Extra bold */
         }
         .subtitle {
             font-size: 1.1em;
@@ -53,19 +57,86 @@
             font-size: 1.2em;
             font-weight: bold;
             border-radius: 12px;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-transform: uppercase;
+            border: none; /* Garante que o botão não tem borda */
+            cursor: pointer;
         }
         .link-button:hover {
             background-color: #d81b60;
             transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Estilo para o modal (tabela de serviços) */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; /* Acima de tudo */
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.6); /* Fundo escuro */
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%; 
+            max-width: 400px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            text-align: left;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #880e4f;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed #e1c4e1;
+            font-size: 1.1em;
+        }
+        .service-item:last-child {
+            border-bottom: none;
+        }
+        .service-name {
+            font-weight: 500;
+            color: #880e4f;
+        }
+        .service-price {
+            color: #d81b60;
+            font-weight: bold;
+        }
+
+        /* Responsividade para o modal em telas menores */
+        @media (max-width: 600px) {
+            .modal-content {
+                margin: 20% auto;
+                width: 90%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://picsum.photos/150/150" alt="Foto de Perfil Maiane Manicure" class="profile-pic">
+        <!-- CORREÇÃO: Mudado o formato da imagem de volta para perfil.png -->
+        <img src="perfil.png" onerror="this.onerror=null;this.src='https://placehold.co/150x150/ff80ab/ffffff?text=MAIANE'; this.alt='Imagem de Perfil Não Encontrada';" alt="Foto de Perfil Maiane Manicure" class="profile-pic">
         
         <h1>Maiane Manicure</h1>
         <p class="subtitle">Especialista em Cuidado de Mãos e Pés | Valença, BA</p>
@@ -78,11 +149,67 @@
             📸 VER MEUS TRABALHOS
         </a>
 
-        <a href="javascript:alert('TABELA DE SERVIÇOS:%0A%0A- Mão (1h30m): R$ 30%0A- Pé (1h30m): R$ 30%0A- Unha Postiça (1h30m): R$ 40%0A- Combo Pé e Mão (2h30m): R$ 50%0A- Esmaltação (1h30m): R$ 15%0A%0A*Lembre-se de confirmar a disponibilidade no WhatsApp.')" class="link-button" style="background-color: #4CAF50;" target="_self">
+        <!-- Botão abre o modal -->
+        <button id="open-services-modal" class="link-button" style="background-color: #4CAF50;">
             📝 VER TABELA DE SERVIÇOS
-        </a>
+        </button>
 
         <p style="font-size: 0.8em; color: #888; margin-top: 30px;">Pronta para te atender em Valença, BA!</p>
     </div>
+
+    <!-- O Modal (Pop-up) -->
+    <div id="services-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 style="color: #880e4f; margin-top: 0; border-bottom: 2px solid #ff80ab; padding-bottom: 10px;">Tabela de Serviços</h2>
+            
+            <div class="service-item">
+                <span class="service-name">Mão (Aprox. 1h30m)</span>
+                <span class="service-price">R$ 30,00</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Pé (Aprox. 1h30m)</span>
+                <span class="service-price">R$ 30,00</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Unha Postiça (Aprox. 1h30m)</span>
+                <span class="service-price">R$ 40,00</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Combo Pé e Mão (Aprox. 2h30m)</span>
+                <span class="service-price">R$ 50,00</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">Esmaltação (Aprox. 1h30m)</span>
+                <span class="service-price">R$ 15,00</span>
+            </div>
+
+            <p style="font-size: 0.9em; color: #a44a80; margin-top: 20px;">*Lembre-se de confirmar a disponibilidade e o horário exato no WhatsApp.</p>
+        </div>
+    </div>
+
+    <script>
+        // Lógica do Modal (Pop-up)
+        const modal = document.getElementById("services-modal");
+        const btn = document.getElementById("open-services-modal");
+        const span = document.getElementsByClassName("close-button")[0];
+
+        // 1. Quando o usuário clica no botão, abre o modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // 2. Quando o usuário clica no 'x' (span), fecha o modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // 3. Quando o usuário clica em qualquer lugar fora do modal, fecha
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
