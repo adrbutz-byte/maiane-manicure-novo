@@ -1,0 +1,52 @@
+/* Fonte padrão */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Paleta */
+:root {
+  --primary-pink: #ff4b91;
+  --dark-pink: #d63384;
+  --light-bg: #fff8fa;
+  --text-color: #333;
+}
+
+/* Containers */
+.box-item {
+  background: white;
+  border: 1px solid #f1f1f1;
+  border-radius: 12px;
+  padding: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.box-item:hover {
+  border-color: var(--primary-pink);
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Títulos */
+.step-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--dark-pink);
+}
+
+/* Foto de perfil */
+.profile-pic-large {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--primary-pink);
+  margin-bottom: 10px;
+}
+
+/* Scroll suave */
+#date-selection-container {
+  scroll-snap-type: x mandatory;
+}
+#date-selection-container > * {
+  scroll-snap-align: center;
+}
