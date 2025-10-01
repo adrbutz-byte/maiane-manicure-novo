@@ -21,8 +21,8 @@ function scrollToElement(id) {
 }
 
 function showStep(stepId) {
-    const stepElement = document.getElementById(stepId);
-    stepElement.classList.add('step-visible');
+    const element = document.getElementById(stepId);
+    element.classList.add('step-visible');
     setTimeout(() => {
         scrollToElement(stepId);
     }, 10);
