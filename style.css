@@ -147,6 +147,7 @@ body {
 /* --- CORREÇÃO FINAL PARA O BOTÃO FLUTUANTE (ANULAR CORES PADRÃO) --- */
 /* Esta regra garante que as classes de cor (bg-gray-300, text-gray-600) do app.js tenham prioridade */
 #book-button[disabled] {
+    /* O código que estava faltando ou sendo quebrado era este: */
     background-color: transparent !important; /* Permite que o fundo cinza-claro do Tailwind entre */
     color: inherit !important; /* Permite que o texto cinza-escuro do Tailwind entre */
     box-shadow: none !important; /* Remove qualquer sombra que possa atrapalhar */
