@@ -1,183 +1,126 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maiane Manicure - Agendamento Rápido</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maiane Manicure - Agendamento Rápido</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-:root {
-    --primary-pink: #ff69b4;
-    --dark-pink: #d12e69;
-    --light-bg: #f9f9f9;
-    --text-color: #333;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--light-bg);
-    min-height: 100vh;
-    color: var(--text-color);
-}
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-}
+        .perfil {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
 
-.step-title {
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: #374151;
-    margin-bottom: 1rem;
-    border-left: 4px solid var(--primary-pink);
-    padding-left: 0.75rem;
-}
+        main {
+            padding: 20px;
+            text-align: center;
+        }
 
-.box-item {
-    padding: 16px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    border: 2px solid transparent;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    text-align: left;
-}
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-.selected-item {
-    border-color: var(--primary-pink) !important;
-    background-color: #fff0f5;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transform: translateY(-1px);
-}
+        button:hover {
+            background-color: #45a049;
+        }
 
-.date-card {
-    min-width: 80px;
-    text-align: center;
-    padding: 10px 0;
-    font-weight: 600;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.date-card .day-name { font-size: 0.8rem; color: #9ca3af; margin-bottom: 4px; }
-.date-card.selected-item .day-name { color: var(--dark-pink); }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
 
-#date-selection-container::-webkit-scrollbar { height: 5px; }
-#date-selection-container::-webkit-scrollbar-thumb { background: #ffc0cb; border-radius: 10px; }
-#date-selection-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        /* Estilo do botão de agendamento final */
+        #book-button {
+            width: 100%;
+            padding: 18px;
+            border-radius: 12px;
+            background-color: #ff69b4; /* rosa destaque */
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+            transition: background-color 0.2s, transform 0.1s;
+        }
 
-#step-2, #step-3 { opacity:0; max-height:0; overflow:hidden; transition: opacity 0.5s ease, max-height 0.5s ease; }
-.step-visible { opacity:1 !important; max-height:800px !important; margin-top:1.5rem; margin-bottom:2.5rem; }
+        #book-button:hover:not(:disabled) {
+            background-color: #d12e69;
+            transform: scale(1.03);
+        }
 
-#confirm-service-button {
-    padding:12px; border-radius:8px; background-color: var(--dark-pink);
-    color:white; font-weight:700; transition: background-color 0.2s;
-}
-#confirm-service-button:hover { background-color: var(--primary-pink); }
-
-.logo-container { display:flex; flex-direction:column; align-items:center; padding-top:20px; padding-bottom:10px; }
-.profile-pic-large {
-    width:150px; height:150px; border-radius:50%; object-fit:cover;
-    border:6px solid var(--primary-pink); outline:3px solid white;
-    box-shadow:0 6px 15px rgba(0,0,0,0.2); margin-bottom:15px;
-}
-
-#detail-description { font-size:1rem; font-weight:600; color:#4b5563; }
-
-/* --- NOVO ESTILO BOTÃO FINAL DE AGENDAMENTO --- */
-#book-button {
-    width: 100%;
-    padding: 18px;
-    border-radius: 12px;
-    background-color: var(--primary-pink);
-    color: white;
-    font-weight: 800;
-    font-size: 1.2rem;
-    transition: background-color 0.2s, transform 0.1s;
-}
-#book-button:hover:not(:disabled) {
-    background-color: var(--dark-pink);
-    transform: scale(1.03);
-}
-#book-button:disabled {
-    background-color: #fbb6ce; /* rosa claro quando desativado */
-    cursor: not-allowed;
-}
-</style>
+        #book-button:disabled {
+            background-color: #fbb6ce;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-<header class="logo-container">
-<img src="perfil.png" alt="Logo Maiane Manicure" class="profile-pic-large">
-<h1 class="text-3xl font-extrabold text-gray-800">Maiane Manicure</h1>
-<p class="text-md text-gray-500">Agende em 3 passos</p>
-</header>
+    <header>
+        <img src="perfil.png" alt="Perfil Maiane" class="perfil">
+        <h1>Maiane Manicure</h1>
+    </header>
 
-<section id="step-1" class="mb-6">
-<h2 class="step-title">1. Escolha o Serviço</h2>
-<div id="services-list" class="space-y-3"></div>
+    <main>
+        <p>Conteúdo da página (serviços, datas e horários) vai aqui...</p>
 
-<div id="service-details" class="mt-6 p-4 box-item hidden">
-<p class="text-xl font-extrabold text-dark-pink mb-2" id="detail-name"></p>
-<p class="mb-3" id="detail-description"></p>
-<div class="flex justify-between items-center text-md font-semibold text-gray-700">
-<span>Preço: <strong id="detail-price" class="text-primary-pink"></strong></span>
-<span>Tempo: <strong id="detail-duration" class="text-primary-pink"></strong></span>
-</div>
-<button id="confirm-service-button" class="mt-4 w-full">Confirmar e Escolher Data</button>
-</div>
-</section>
+        <!-- Botão de agendamento final -->
+        <button id="book-button" disabled>
+            Preencha todos os passos
+        </button>
+    </main>
 
-<section id="step-2" class="mb-6">
-<h2 class="step-title">2. Selecione a Data</h2>
-<div id="date-selection-container" class="flex overflow-x-scroll space-x-3 pb-3">
-<p class="text-gray-500 py-3">Selecione um serviço primeiro...</p>
-</div>
-<p id="date-warning" class="text-sm text-red-500 mt-2 hidden">Por favor, selecione uma data no futuro.</p>
-</section>
+    <footer>
+        &copy; 2025 Maiane Manicure
+    </footer>
 
-<section id="step-3" class="mb-20">
-<h2 class="step-title">3. Escolha o Período e Horário</h2>
-<div id="period-selection" class="grid grid-cols-2 gap-3 mb-4 hidden">
-<button data-period="morning" class="period-button box-item">Manhã (08h às 12h)</button>
-<button data-period="afternoon" class="period-button box-item">Tarde (13h às 17h)</button>
-</div>
-<div id="time-slots-wrapper" class="hidden">
-<p class="text-sm text-gray-500 mb-2 font-medium">Horários disponíveis na <strong id="selected-period-text"></strong>:</p>
-<div id="time-slots" class="grid grid-cols-3 gap-3"></div>
-</div>
-</section>
+    <script>
+        // Exemplo de ativação do botão (substitua pelo seu JS real)
+        const bookButton = document.getElementById('book-button');
 
-<section id="final-booking-area" class="sticky bottom-0 left-0 right-0 bg-white p-4 shadow-2xl z-10 rounded-t-xl border-t border-gray-100">
-<div class="max-w-sm mx-auto space-y-3">
-<div class="flex justify-between items-center text-sm font-semibold text-gray-700">
-<span class="truncate">Serviço: <strong id="summary-service">---</strong></span>
-<span class="truncate">Data: <strong id="summary-date">---</strong></span>
-<span class="text-xl font-extrabold text-primary-pink">Total: <strong id="summary-price">---</strong></span>
-</div>
-<button id="book-button" disabled>Preencha todos os passos</button>
-</div>
-</section>
-</div>
+        // Função fictícia para simular preenchimento dos passos
+        function updateBookButton(simulateComplete = false) {
+            if (simulateComplete) {
+                bookButton.disabled = false;
+                bookButton.textContent = 'Agendar Serviço - 10:00';
+            } else {
+                bookButton.disabled = true;
+                bookButton.textContent = 'Preencha todos os passos';
+            }
+        }
 
-<script>
-// --- Configuração ---
-const SERVICES = [
-{ id:1, name:"Pé", duration:"1:30 min", price:30.00, description:"Cuidado completo para os seus pés. Inclui imersão, cutilagem precisa, hidratação e esmaltação com a cor de sua preferência. Pés macios e bem cuidados!", icon:"👣" },
-{ id:2, name:"Mão", duration:"1:30 min", price:30.00, description:"Tratamento especializado para suas mãos. Cutilagem impecável, massagem relaxante e aplicação de esmalte de alta qualidade para um acabamento perfeito.", icon:"💅" },
-{ id:3, name:"Unha Postiça", duration:"1:30 min", price:40.00, description:"Alongamento com unhas postiças (tips ou soft gel), seguido de cutilagem e esmaltação. Unhas longas, resistentes e com o formato que você desejar!", icon:"✨" },
-{ id:4, name:"Combo Pé e Mão", duration:"2:30 min", price:50.00, description:"O pacote completo para sua beleza! Pés e mãos impecáveis em uma única sessão. Inclui cutilagem, hidratação e esmaltação profissional para ambos.", icon:"👑" },
-{ id:5, name:"Esmaltação", duration:"1:30 min", price:15.00, description:"Serviço rápido focado na aplicação do esmalte. Limpeza superficial e pintura caprichada (cores à escolha do cliente). Ideal para retoques!", icon:"🌈" }
-];
-
-const TIME_SLOTS_ALL = [
-{ time:"08:30", period:"morning" },
-{ time:"10:00", period:"morning" },
-{ time:"13:00", period:"afternoon" },
-{ time:"14:30
+        // Apenas para exemplo: habilita o botão após 2s
+        setTimeout(() => updateBookButton(true), 2000);
+    </script>
+</body>
+</html>
