@@ -4,8 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maiane Manicure - Agendamento Rápido</title>
-    <link rel="stylesheet" href="style.css"> 
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos CSS Adicionais */
+        
+        /* Oculta os passos futuros inicialmente */
+        #step-2, #step-3 {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.5s ease, max-height 0.5s ease;
+        }
+        
+        /* Mostra o passo com animação */
+        .step-visible {
+            opacity: 1 !important;
+            max-height: 800px !important; /* Valor alto para garantir que caiba */
+            margin-top: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Os estilos da classe .selected-item, .date-card, .box-item, etc. 
+           estão agora no arquivo style.css para organização. */
+    </style>
 </head>
 <body>
     <div class="container">
@@ -17,6 +39,7 @@
         
         <section id="step-1" class="mb-6">
             <h2 class="step-title">1. Escolha o Serviço</h2>
+            
             <div id="services-list" class="space-y-3">
                 </div>
             
@@ -43,6 +66,7 @@
 
         <section id="step-3" class="mb-20">
             <h2 class="step-title">3. Escolha o Período e Horário</h2>
+            
             <div id="period-selection" class="grid grid-cols-2 gap-3 mb-4 hidden">
                 <button data-period="morning" class="period-button box-item">Manhã (08h às 12h)</button>
                 <button data-period="afternoon" class="period-button box-item">Tarde (13h às 17h)</button>
@@ -71,7 +95,8 @@
 
     </div>
 
-    <script src="config.js"></script>
-    <script src="app.js"></script>
+    <script src="./config.js"></script>
+    <script src="./app.js"></script>
+    
 </body>
 </html>
