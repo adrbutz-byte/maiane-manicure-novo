@@ -1,0 +1,145 @@
+/* Importa a Fonte */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+/* Configuração de Cores (Variáveis CSS) */
+:root {
+    /* Tonalidades de Rosa Maiane */
+    --primary-pink: #ff69b4; /* Rosa Choque principal */
+    --dark-pink: #d12e69; /* Rosa escuro para títulos */
+    --light-bg: #f9f9f9; /* Fundo muito claro/branco */
+    --text-color: #333;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-bg); 
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilo do Título do Passo (Borda esquerda rosa) */
+.step-title {
+    font-weight: 700;
+    font-size: 1.25rem; /* text-xl */
+    color: #374151; /* gray-700 */
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--primary-pink);
+    padding-left: 0.75rem;
+}
+
+/* Estilo dos Cards de Serviço e Horário (Visual das caixas) */
+.box-item {
+    padding: 16px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Sombra suave */
+    border: 2px solid transparent; /* Borda transparente inicial */
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-align: left;
+}
+
+/* Estado Selecionado (Aplicado a Serviço, Data e Horário) */
+.selected-item {
+    border-color: var(--primary-pink) !important;
+    background-color: #fff0f5; /* Rosa muito suave para fundo */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Estilos específicos para o novo Seletor de Data */
+.date-card {
+    min-width: 80px; /* Largura mínima para ser legível */
+    text-align: center;
+    padding: 10px 0;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.date-card .day-name {
+    font-size: 0.8rem;
+    color: #9ca3af; /* gray-400 */
+    margin-bottom: 4px;
+}
+/* Destaque do Nome do Dia na data selecionada */
+.date-card.selected-item .day-name {
+    color: var(--dark-pink); /* Cor de texto do dia selecionado */
+}
+/* Custom scrollbar para o seletor de data */
+#date-selection-container::-webkit-scrollbar {
+    height: 5px;
+}
+#date-selection-container::-webkit-scrollbar-thumb {
+    background: #ffc0cb; /* Rosa claro para o thumb */
+    border-radius: 10px;
+}
+#date-selection-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+/* Oculta os passos futuros inicialmente */
+#step-2, #step-3 {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease, max-height 0.5s ease;
+}
+
+/* Mostra o passo com animação */
+.step-visible {
+    opacity: 1 !important;
+    max-height: 800px !important; /* Valor alto para garantir que caiba */
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Botão de Confirmação local */
+#confirm-service-button {
+    padding: 12px;
+    border-radius: 8px;
+    background-color: var(--dark-pink);
+    color: white;
+    font-weight: 700;
+    transition: background-color 0.2s;
+}
+
+#confirm-service-button:hover {
+     background-color: var(--primary-pink);
+}
+
+/* Estilos para o Destaque da Logo/Foto */
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.profile-pic-large {
+    width: 150px; 
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* Anel duplo de destaque */
+    border: 6px solid var(--primary-pink); /* Anel rosa primário */
+    outline: 3px solid white; /* Anel interno branco */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
+    margin-bottom: 15px;
+}
+
+/* Descrição do Serviço com mais destaque */
+#detail-description {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4b5563; /* gray-600 */
+}
