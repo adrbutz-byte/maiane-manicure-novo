@@ -143,11 +143,4 @@ body {
     font-weight: 600;
     color: #4b5563; /* gray-600 */
 }
-
-/* --- CORREÇÃO FINAL PARA O BOTÃO FLUTUANTE (ANULAR CORES PADRÃO) --- */
-/* Garante que o fundo e o texto definidos pelo app.js (Tailwind) sejam usados */
-#book-button[disabled] {
-    background-color: transparent !important; /* Permite que o cinza do Tailwind (bg-gray-300) apareça */
-    color: #4b5563 !important; /* Força o cinza escuro no texto (A SOLUÇÃO) */
-    box-shadow: none !important; /* Remove qualquer sombra que possa atrapalhar */
-}
+/* A regra de correção do botão flutuante foi REMOVIDA */
