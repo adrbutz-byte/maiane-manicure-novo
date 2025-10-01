@@ -10,12 +10,12 @@ function updateBookButton() {
         bookButton.textContent = `Agendar ${selectedService.name} - ${selectedTime}`;
         // Ativado: Remove a opacidade para ficar com a cor total e habilita o hover
         bookButton.classList.remove('opacity-50', 'cursor-not-allowed');
-        bookButton.classList.add('hover:bg-dark-pink');
+        bookButton.classList.add('hover:bg-dark-pink'); // Garante que o hover rosa escuro funcione
     } else {
         bookButton.disabled = true;
         bookButton.textContent = 'Preencha todos os passos';
         // Desativado: Adiciona opacidade para indicar que está inativo
         bookButton.classList.add('opacity-50', 'cursor-not-allowed');
-        bookButton.classList.remove('hover:bg-dark-pink');
+        bookButton.classList.remove('hover:bg-dark-pink'); // Remove o hover quando inativo
     }
 }
